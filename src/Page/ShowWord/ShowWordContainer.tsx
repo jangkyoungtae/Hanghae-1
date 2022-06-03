@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import wordApi from "../../api/wordApi";
@@ -11,29 +11,29 @@ import ShowWordPresenter from "./ShowWordPresenter";
 
 function ShowWordContainer() {
     const dispatch = useDispatch();
-    const wordLists = useSelector((state: RootState) => state.word.word)
+    const [words, setWords] = useState([]);
     const updateWord = useCallback(
         (word: IWords) => dispatch(addWord({ word: word })),
         [dispatch]
     );
-    const addDefaultWord = async (data: Array<IWords>) => {
-        console.log(data)
-        console.log(wordLists)
-        data.map((datas:IWords) => {
-            return updateWord(datas);
-        })
-    }
+    const wordLists = useSelector((state: RootState) => state.word.word)
     const getWordList = async () => {
         const wordlist = await wordApi.get('/wordList.json');
-        await addDefaultWord(wordlist.data);
+        setWords(wordlist.data);    
         
     }    
     
     useEffect(() => {
-        if (wordLists.length <=0) {
-            getWordList();
+        
+        if (wordLists.length <= 0) {
+            getWordList().then(() => {
+                words.map((datas:IWords) => {
+                    return updateWord(datas);
+                })
+            })
+            
         }
-    },[])
+    },[updateWord,wordLists,words])
     
     return (
         <ShowWordPresenter />
