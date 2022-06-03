@@ -1,13 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
 import ShowWord from "./Page/ShowWord";
-import './App.css';
+import { createGlobalStyle } from "styled-components/"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AddWord from "./Page/AddWord";
 
+
+const GlobalStyle = createGlobalStyle`
+  body{
+    background-color: #CCFFFF;
+  }
+`
 function App() {
+  
   return (
-    <div className="App">
-      <ShowWord />
-    </div>
+    <BrowserRouter>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<ShowWord />} />      
+        <Route path="/AddWord" element={<AddWord />} />
+      </Routes>
+      
+    </BrowserRouter>
   );
 }
 
