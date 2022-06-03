@@ -10,11 +10,13 @@ const initailState: Word = {
 
 
 const word = createReducer<Word, WordAction>(initailState, {
+    
     [ADD]: (state, action) => {
         return produce(state, draft => {
             draft.word.push(action.payload.word)
         })
     }
 });
+
 
 export default word

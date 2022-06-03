@@ -11,16 +11,19 @@ import ShowWordPresenter from "./ShowWordPresenter";
 
 function ShowWordContainer() {
     const dispatch = useDispatch();
+
     const [words, setWords] = useState([]);
+
     const updateWord = useCallback(
         (word: IWords) => dispatch(addWord({ word: word })),
         [dispatch]
     );
+    
     const wordLists = useSelector((state: RootState) => state.word.word)
+
     const getWordList = async () => {
         const wordlist = await wordApi.get('/wordList.json');
-        setWords(wordlist.data);    
-        
+        setWords(wordlist.data);
     }    
     
     useEffect(() => {
@@ -30,9 +33,9 @@ function ShowWordContainer() {
                 words.map((datas:IWords) => {
                     return updateWord(datas);
                 })
-            })
-            
+            })            
         }
+
     },[updateWord,wordLists,words])
     
     return (

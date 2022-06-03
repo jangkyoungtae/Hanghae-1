@@ -17,8 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ShowWord />} />      
         <Route path="/AddWord" element={<AddWord />} />
-      </Routes>
-      
+      </Routes>      
     </BrowserRouter>
   );
 }
