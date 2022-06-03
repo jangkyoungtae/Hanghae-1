@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import InputWrod from "../../api/InputWord";
+import InputWrod from "../../Component/InputWord";
 import { addWord } from "../../redux/word/actions";
 import { IWords } from "../../redux/word/types";
 

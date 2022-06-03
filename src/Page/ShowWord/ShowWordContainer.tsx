@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import wordApi from "../../api/wordApi";
@@ -20,7 +20,7 @@ function ShowWordContainer() {
         console.log(data)
         console.log(wordLists)
         data.map((datas:IWords) => {
-            updateWord(datas);
+            return updateWord(datas);
         })
     }
     const getWordList = async () => {
