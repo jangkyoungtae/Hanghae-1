@@ -41,12 +41,19 @@ const nonData: IWords = {
 } 
 
 export default function ShowWordPresenter() {
-    const wordLists = useSelector((state: RootState) => state)
+    const wordLists = useSelector((state: RootState) => state);
+
     const navigate = useNavigate();
+
     const { word } = wordLists.word;
+
     const movePageAddWrod = () => {
         navigate("/AddWord")
     }
+
+
+
+
     return (
         <>        
             <MainContainer>
@@ -59,7 +66,6 @@ export default function ShowWordPresenter() {
                         })}
                     </DictionaryContainer>
                     :
-
                     <WordBox data={nonData}/>
                 }
                 <AddWordBtn onClick={movePageAddWrod}>
