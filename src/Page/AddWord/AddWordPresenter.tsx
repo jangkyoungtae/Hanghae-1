@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback,  useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -53,6 +53,7 @@ export default function AddWordPresenter() {
     );    
     const navigate = useNavigate();
     const movePageShowWord = () => {
+        
         const inputData :IWords = {
             word: inputWord,
             description: inputDescription,
@@ -67,8 +68,8 @@ export default function AddWordPresenter() {
             <AddWordContainer>
                 <InputBox>
                     <InputWrod caption={"단어"} input={inputWord} setInput={setInputWord}/>
-                    <InputWrod caption={ "설명" }  input={inputDescription} setInput={setDescription}/>
-                    <InputWrod caption={ "예제" }  input={inputExample} setInput={setInputExample}/>
+                    <InputWrod caption={"설명"} input={inputDescription} setInput={setDescription} />
+                    <InputWrod caption={"예제"} input={inputExample} setInput={setInputExample} />
                 </InputBox>
                 <BtnContainer>
                     <AddWordBtn style={{

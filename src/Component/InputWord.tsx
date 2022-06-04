@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components"
 
 const InputContainer = styled.div`
@@ -23,16 +23,17 @@ const InfoInput = styled.input`
 `
 
 export default function InputWrod({ caption , input , setInput}: { caption: string, input:string ,setInput:React.Dispatch<React.SetStateAction<string>>}) {
-    
-    const inputText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const text: React.SetStateAction<string> = e.target.value;
-        setInput(text)
+    const wordRef = useRef<HTMLInputElement >(null)
+    const inputText = () => {
+        if(wordRef.current?.value)
+            setInput(wordRef.current?.value)
     }
+    
     return (
         <InputContainer>
             <CaptionText>{caption}</CaptionText>
             <br></br>
-            <InfoInput type={"text"} onChange={ inputText } value={ input }/>
+            <InfoInput type={"text"} onChange={inputText} value={input} ref={wordRef}/>
         </InputContainer>
     )
 }
