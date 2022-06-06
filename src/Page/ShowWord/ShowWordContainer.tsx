@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import wordApi from "../../api/wordApi";
 import { RootState } from "../../redux";
-import { addWord } from "../../redux/word/actions";
+import { addWord, deleteWord } from "../../redux/word/actions";
 import { IWords } from "../../redux/word/types";
 import ShowWordPresenter from "./ShowWordPresenter";
 
@@ -25,6 +25,7 @@ function ShowWordContainer() {
         const wordlist = await wordApi.get('/wordList.json');
         setWords(wordlist.data);
     }    
+
     
     useEffect(() => {
         
@@ -33,7 +34,7 @@ function ShowWordContainer() {
                 words.map((datas:IWords) => {
                     return updateWord(datas);
                 })
-            })            
+            })
         }
 
     },[updateWord,wordLists,words])

@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { IWords } from "../redux/word/types"
-import {FiPenTool} from "react-icons/fi"
+import { FiPenTool } from "react-icons/fi"
+import {AiOutlineCloseCircle} from "react-icons/ai"
+import { useCallback, useState } from "react"
+import { useDispatch } from "react-redux"
+import { deleteWord } from "../redux/word/actions"
 
 const BoxContainer = styled.div`
     width: 80%;
@@ -36,7 +40,9 @@ const TextBox = styled.div`
     box-sizing: border-box;
 
 `
-const ContentContainer = styled.div`
+const ContentContainer = styled.div`    
+    display: flex;
+    justify-content: space-between;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
@@ -45,17 +51,46 @@ const ContentContainer = styled.div`
 `
 const UpdateBtn = styled.div`
     display: flex;
-    float: right;
+    justify-content: center;
     background-color: #5e76e2;
     padding: 10px;
     border-radius: 30px;
     box-sizing: border-box;
     cursor: pointer;
-`
+    &:hover{
+        background-color: #0e004e;
 
+    }
+`
+const DeleteBtn = styled.div`
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 24px;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover{
+        background-color: red;
+
+    }
+`
 
 export default function WordBox({ data, ref }: { data: IWords, ref?: React.RefObject<HTMLDivElement> }) {
     const navigate = useNavigate()
+    const [color, setColor] = useState("black");
+    const dispatch = useDispatch();
+    const delWord = useCallback(
+        (id: number) => dispatch(deleteWord(id)),
+        [dispatch]
+    );
+    
+    const itemDelete = () => {
+        delWord(data.id)
+    }
+
+
     const movePageAddWrod = () => {
         navigate("/AddWord", {
             state: {
@@ -70,21 +105,51 @@ export default function WordBox({ data, ref }: { data: IWords, ref?: React.RefOb
     return (
         <BoxContainer >
             <ContentContainer ref={ref}>
-                <UpdateBtn onClick={movePageAddWrod}>
-                    <FiPenTool size={24} color={ "white" }>수정</FiPenTool>
-                </UpdateBtn>
-                <TextBox>
-                    <CaptionText>단어 : </CaptionText>
-                    <WordInfoText >{data.word}</WordInfoText>
-                </TextBox>
-                <TextBox>
-                    <CaptionText>설명 : </CaptionText>
-                    <WordInfoText >{data.description}</WordInfoText>
-                </TextBox>
-                <TextBox>
-                    <CaptionText>예시 : </CaptionText>
-                    <ExampleText >{data.example}</ExampleText>
-                </TextBox>
+                
+                <div style={{
+                    display: "flex",
+                    flexDirection:"column"
+                }}>
+                    <TextBox>
+                        <CaptionText>단어 : </CaptionText>
+                        <WordInfoText >{data.word}</WordInfoText>
+                    </TextBox>
+                    <TextBox>
+                        <CaptionText>설명 : </CaptionText>
+                        <WordInfoText >{data.description}</WordInfoText>
+                    </TextBox>
+                    <TextBox>
+                        <CaptionText>예시 : </CaptionText>
+                        <ExampleText >{data.example}</ExampleText>
+                    </TextBox>
+                </div>
+                <div style={{
+                    display: "flex",                   
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                    justifyContent:"space-between"
+
+                    
+                }}>
+                    <DeleteBtn
+                        onMouseOver={() => {
+                            setColor("white")
+                        }}
+                        onMouseLeave={() => {
+                            setColor("black")
+                        }}
+                        onClick={itemDelete}
+                    >
+                        
+                        <AiOutlineCloseCircle style={{
+                            margin: "0px",
+                            padding: "0px",
+                        }} size={36} color={color} />
+                    </DeleteBtn>
+                    <UpdateBtn onClick={movePageAddWrod}>                        
+                        <FiPenTool size={24} color={ "white" }>수정</FiPenTool>
+                    </UpdateBtn>
+                </div>
             </ContentContainer>
             
         </BoxContainer>

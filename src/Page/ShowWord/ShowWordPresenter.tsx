@@ -61,9 +61,7 @@ const WordContainer = styled.div`
     display: flex;
     justify-content:center ;
     flex-wrap: wrap;
-`
-
-
+`;
 
 
 const nonData: IWords = {
