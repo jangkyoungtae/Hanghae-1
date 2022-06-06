@@ -59,6 +59,7 @@ export default function WordBox({ data, ref }: { data: IWords, ref?: React.RefOb
     const movePageAddWrod = () => {
         navigate("/AddWord", {
             state: {
+                id:data.id,
                 description: data.description,
                 example: data.example,
                 word: data.word,

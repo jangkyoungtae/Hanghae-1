@@ -67,6 +67,7 @@ const WordContainer = styled.div`
 
 
 const nonData: IWords = {
+    id:999999999999,
     word: "단어없음",
     description: "단어없음",
     example:"단어없음"
@@ -75,7 +76,7 @@ const nonData: IWords = {
 
 export default function ShowWordPresenter() {
     const wordLists = useSelector((state: RootState) => state);
-    const [itemCount, setItemCount] = useState(8);
+    const [itemCount, setItemCount] = useState(1);
     const navigate = useNavigate();
 
     const { word } = wordLists.word;
@@ -99,7 +100,7 @@ export default function ShowWordPresenter() {
 
 
     useEffect(() => {
-        
+   
     },[itemCount])
 
     return ( 
@@ -107,11 +108,11 @@ export default function ShowWordPresenter() {
             <Title>MY DICTIONARY</Title>             
             {word ? 
                 <DictionaryContainer > 
-                    {word.map((text, index) => {
+                    {word.slice(0).reverse().map((text, index) => {
                         if (index !== itemCount) {
-                            return  word.length > itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ><WordBox  data={text} /></WordContainer>
+                            return  word.length >= itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ><WordBox  data={text} /></WordContainer>
                         } else {                            
-                            return  word.length > itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ref={setTarget} ><WordBox  data={text} /></WordContainer>
+                            return  word.length >= itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ref={setTarget} ><WordBox  data={text} /></WordContainer>
                         }
                         
                     })}

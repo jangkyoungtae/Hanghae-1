@@ -18,12 +18,13 @@ const word = createReducer<Word, WordAction>(initailState, {
     },
     [UPDATE]: (state, action) => {
         return produce(state, draft => {
-            draft.word.map((u) => {
-                console.log(u,action.payload.word)
-            })
+            console.log(action.payload.word.id)
+            if(action.payload.word.id != undefined)
+                draft.word[action.payload.word.id] = { ...action.payload.word }
+            
         })
     }
 });
-//u.word === action.payload.word.word ? {...u, ...action.payload.word} : u
+//
 
 export default word

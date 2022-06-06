@@ -1,9 +1,11 @@
 import { useCallback,  useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import InputWrod from "../../Component/InputWord";
-import { addWord } from "../../redux/word/actions";
+import { RootState } from "../../redux";
+import { addWord, updateWord } from "../../redux/word/actions";
 import { IWords } from "../../redux/word/types";
 
 const MainContainer = styled.div`
@@ -13,7 +15,7 @@ const MainContainer = styled.div`
     box-sizing: border-box;
     box-shadow: 20px 10px 10px black;
     border-radius: 30px;
-    background-color: #CCFFFF;
+    background-color: #0e004e;
     font-family: "Jalnan";    
 `
 const Title = styled.h2`
@@ -22,6 +24,7 @@ const Title = styled.h2`
     flex-direction: column;
     align-items: left;
     padding: 20px;
+    color:white;
 `
 
 const AddWordContainer = styled.div`
@@ -30,15 +33,19 @@ const AddWordContainer = styled.div`
     flex-direction: column;
     align-items: center;
 `
-const AddWordBtn = styled.button`
+const AddWordBtn = styled.button< { color : string } >`
     width: 100wh;
     padding: 20px;
     font-size: 25px;
-    background-color: blueviolet;
+    background-color: ${(props) => (props.color)};
     color: white;
     margin: 10px;
     font-weight: bold;
     border-radius: 30px;
+    cursor: pointer;
+    &:hover{
+        background-color:rgba(30,30,30,30)
+    }
 `
 const InputBox = styled.div`
     width: 80%;
@@ -52,21 +59,27 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
     const [inputWord, setInputWord] = useState("");
     const [inputDescription, setDescription] = useState("");
     const [inputExample, setInputExample] = useState("");
-
     const dispatch = useDispatch();
-    const updateWord = useCallback(
+    const addWords = useCallback(
         (word: IWords) => dispatch(addWord({ word: word })),
         [dispatch]
     );    
+    const updateWords = useCallback(
+        (word: IWords) => dispatch(updateWord({ word: word })),
+        [dispatch]
+    );    
+    const wordLists = useSelector((state: RootState) => state.word.word)
     const navigate = useNavigate();
     const movePageShowWord = () => {
         
-        const inputData :IWords = {
+        const inputData: IWords = {
+            id: data !=undefined ? data.id : wordLists.length-1,
             word: inputWord,
             description: inputDescription,
             example:inputExample
-        }
-        updateWord(inputData);
+        }        
+        if(data) updateWords(inputData)
+        else addWords(inputData);
         navigate("/")
     }
     const movePageCancle = () => {
@@ -82,13 +95,10 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
                     <InputWrod caption={"예제"} setInput={setInputExample} data={data?.example}/>
                 </InputBox>
                 <BtnContainer>
-                    <AddWordBtn
-                        style={{
-                            backgroundColor:"red"
-                        }}
+                    <AddWordBtn color="red"
                         onClick={movePageCancle}
                     >취소하기</AddWordBtn>
-                    <AddWordBtn onClick={movePageShowWord}>{!data ? "추가하기" : "수정하기"}</AddWordBtn>
+                    <AddWordBtn color="rgba(69, 0, 231, 0.902)" onClick={movePageShowWord}>{!data ? "추가하기" : "수정하기"}</AddWordBtn>
                 </BtnContainer>
             </AddWordContainer>
                     
