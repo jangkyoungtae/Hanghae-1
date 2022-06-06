@@ -37,9 +37,8 @@ export default function InputWrod({ caption , setInput, data}: { caption: string
     useEffect(() => {
         if (wordRef.current !== undefined && data !== undefined  && wordRef.current !== null) {
             wordRef.current.value = data;
-            setInput(data)
         }
-    }, [])
+    }, [data])
     
     return (
         <InputContainer>

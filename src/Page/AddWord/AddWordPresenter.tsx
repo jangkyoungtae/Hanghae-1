@@ -56,9 +56,9 @@ const BtnContainer = styled.div`
 `
 
 export default function AddWordPresenter({ data}: {data?:IWords}) {
-    const [inputWord, setInputWord] = useState("");
-    const [inputDescription, setDescription] = useState("");
-    const [inputExample, setInputExample] = useState("");
+    const [inputWord, setInputWord] = useState(data ? data.word : "");
+    const [inputDescription, setDescription] = useState(data ? data.description : "");
+    const [inputExample, setInputExample] = useState(data ? data.example : "");
     const dispatch = useDispatch();
     const addWords = useCallback(
         (word: IWords) => dispatch(addWord({ word: word })),
