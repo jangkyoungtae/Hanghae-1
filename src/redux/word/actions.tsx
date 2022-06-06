@@ -5,7 +5,6 @@ export const ADD = "word/ADD";
 export const UPDATE = "word/UPDATE";
 export const DEL = "word/DEL";
 
-
 export const addWord = createAction(ADD)<{
     word: IWords,
 }>();

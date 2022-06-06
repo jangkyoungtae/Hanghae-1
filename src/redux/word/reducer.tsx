@@ -18,27 +18,27 @@ const word = createReducer<Word, WordAction>(initailState, {
     },
     [UPDATE]: (state, action) => {
         return produce(state, draft => {
-            if (action.payload.word.id !== undefined && action.payload.word.id !== null)
-                draft.word[action.payload.word.id] = { ...action.payload.word }
+            
+            if (action.payload.word.id !== undefined && action.payload.word.id !== null) {
+                
+                draft.word.map((v) => {
+                    if (action.payload.word.id === v.id) {
+                        return draft.word[v.id] = { ...action.payload.word }
+                        
+                    }
+                })
+                
+            }
         });
     },
     [DEL]: (state, action) => {
         return produce(state, draft => {
             draft.word = draft.word.filter(v => {
-                console.log(v.id , action.payload, v.id !== action.payload)
                 return v.id !== action.payload
             })
         });
-    }
+    },
 });
 //
-
-export interface IWords{
-    id: number,
-    word: string,
-    description: string,
-    example:string
-}
-
 
 export default word

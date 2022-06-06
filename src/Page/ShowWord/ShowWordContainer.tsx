@@ -18,7 +18,7 @@ function ShowWordContainer() {
         (word: IWords) => dispatch(addWord({ word: word })),
         [dispatch]
     );
-    
+
     const wordLists = useSelector((state: RootState) => state.word.word)
 
     const getWordList = async () => {
@@ -28,7 +28,6 @@ function ShowWordContainer() {
 
     
     useEffect(() => {
-        
         if (wordLists.length <= 0) {
             getWordList().then(() => {
                 words.map((datas:IWords) => {

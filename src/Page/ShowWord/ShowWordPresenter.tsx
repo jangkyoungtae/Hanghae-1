@@ -8,6 +8,7 @@ import { MdLibraryAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
 import useIntersectionObserver from "../../Hooks/useIntersectionObserver";
 
+
 const Title = styled.h1`
     display: flex;
     justify-content: left;
@@ -78,6 +79,7 @@ export default function ShowWordPresenter() {
     const navigate = useNavigate();
 
     const { word } = wordLists.word;
+    
     const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
         if (isIntersecting){
             setItemCount((v) => {
@@ -90,7 +92,7 @@ export default function ShowWordPresenter() {
         }
             
     };
-
+    
     const { setTarget } = useIntersectionObserver({ onIntersect });
     const movePageAddWrod = () => {
         navigate("/AddWord")
@@ -104,20 +106,26 @@ export default function ShowWordPresenter() {
     return ( 
         <MainContainer>
             <Title>MY DICTIONARY</Title>             
-            {word ? 
+            {wordLists ? 
                 <DictionaryContainer > 
-                    {word.slice(0).reverse().map((text, index) => {
-                        console.log(text.id , index , itemCount)
+                    {word.slice(0).reverse().map((text:any, index:any) => {
                         if (index !== itemCount) {
-                            return word.length > itemCount && index <= itemCount && <WordContainer key={`${text.word + index}`} ><WordBox data={text} setItemCount={setItemCount}/></WordContainer>
+                            return word.length > itemCount && index <= itemCount &&
+                                <WordContainer key={`${text.word + index}`} >
+                                    <WordBox data={text} setItemCount={setItemCount} />
+                                </WordContainer>
                         } else {                            
-                            return  word.length > itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ref={setTarget} ><WordBox  data={text} setItemCount={setItemCount}/></WordContainer>
+                            return word.length > itemCount && index <= itemCount &&
+                                <WordContainer key={`${text.word + index}`} ref={setTarget} >
+                                    <WordBox data={text} setItemCount={setItemCount} />
+                                </WordContainer>
                         }
-                        
                     })}
                 </DictionaryContainer>
                 :
-                <WordContainer><WordBox data={nonData} setItemCount={setItemCount}/></WordContainer>
+                <WordContainer>
+                    <WordBox data={nonData} setItemCount={setItemCount} />
+                </WordContainer>
             }
             <AddWordBtn>
                 <MdLibraryAdd size="60" color={"#0e004e"} onClick={movePageAddWrod} />
