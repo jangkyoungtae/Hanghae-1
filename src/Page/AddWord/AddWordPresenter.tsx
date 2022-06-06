@@ -71,16 +71,30 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
     const wordLists = useSelector((state: RootState) => state.word.word)
     const navigate = useNavigate();
     const movePageShowWord = () => {
-        
-        const inputData: IWords = {
-            id: data !=undefined ? data.id : wordLists.length-1,
-            word: inputWord,
-            description: inputDescription,
-            example:inputExample
-        }        
-        if(data) updateWords(inputData)
-        else addWords(inputData);
-        navigate("/")
+        if (inputWord !== "" && inputDescription !== "") {
+            
+            if (data !== undefined  && data !== null ) {
+                const inputData: IWords = {
+                id: data.id ,
+                word: inputWord,
+                description: inputDescription,
+                example: inputExample
+            }
+                updateWords(inputData)
+
+            } else {
+                const inputData: IWords = {
+                    id: wordLists.length,
+                    word: inputWord,
+                    description: inputDescription,
+                    example: inputExample
+                }
+                addWords(inputData);
+            }
+            navigate("/")
+        } else {
+            alert("단어와 설명이 비어있습니다 . 확인해주세요");
+        }
     }
     const movePageCancle = () => {
         navigate("/")
