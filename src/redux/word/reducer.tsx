@@ -23,8 +23,9 @@ const word = createReducer<Word, WordAction>(initailState, {
                 
                 draft.word.map((v) => {
                     if (action.payload.word.id === v.id) {
-                        return draft.word[v.id] = { ...action.payload.word }
-                        
+                        return draft.word[v.id] = { ...action.payload.word }                        
+                    } else {
+                        return v
                     }
                 })
                 
