@@ -60,6 +60,7 @@ const WordContainer = styled.div`
     padding: 10px;
     display: flex;
     justify-content:center ;
+    flex-wrap: wrap;
 `
 
 

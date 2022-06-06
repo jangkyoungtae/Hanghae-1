@@ -38,7 +38,8 @@ export default function InputWrod({ caption , setInput, data}: { caption: string
         if (wordRef.current !== undefined && data !== undefined  && wordRef.current !== null) {
             wordRef.current.value = data;         
         }
-    },[data])
+    }, [data])
+    
     return (
         <InputContainer>
             <CaptionText>{caption}</CaptionText>
