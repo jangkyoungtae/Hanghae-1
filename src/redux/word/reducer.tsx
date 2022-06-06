@@ -24,7 +24,10 @@ const word = createReducer<Word, WordAction>(initailState, {
     },
     [DEL]: (state, action) => {
         return produce(state, draft => {
-            draft.word = draft.word.filter(v =>  v.id !== action.payload)
+            draft.word = draft.word.filter(v => {
+                console.log(v.id , action.payload, v.id !== action.payload)
+                return v.id !== action.payload
+            })
         });
     }
 });

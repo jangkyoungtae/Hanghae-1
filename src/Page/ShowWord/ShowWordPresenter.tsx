@@ -81,8 +81,8 @@ export default function ShowWordPresenter() {
     const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
         if (isIntersecting){
             setItemCount((v) => {
-                if(word.length-1 > v+3){
-                    return v + 3            
+                if(word.length-1 > v+1){
+                    return v + 1            
                 }else{
                     return word.length-1
                 }
@@ -99,7 +99,7 @@ export default function ShowWordPresenter() {
 
     useEffect(() => {
    
-    },[itemCount])
+    },[])
 
     return ( 
         <MainContainer>
@@ -107,16 +107,17 @@ export default function ShowWordPresenter() {
             {word ? 
                 <DictionaryContainer > 
                     {word.slice(0).reverse().map((text, index) => {
+                        console.log(text.id , index , itemCount)
                         if (index !== itemCount) {
-                            return  word.length >= itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ><WordBox  data={text} /></WordContainer>
+                            return word.length > itemCount && index <= itemCount && <WordContainer key={`${text.word + index}`} ><WordBox data={text} setItemCount={setItemCount}/></WordContainer>
                         } else {                            
-                            return  word.length >= itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ref={setTarget} ><WordBox  data={text} /></WordContainer>
+                            return  word.length > itemCount && index <= itemCount &&  <WordContainer key={`${text.word+index}`} ref={setTarget} ><WordBox  data={text} setItemCount={setItemCount}/></WordContainer>
                         }
                         
                     })}
                 </DictionaryContainer>
                 :
-                <WordContainer><WordBox data={nonData}/></WordContainer>
+                <WordContainer><WordBox data={nonData} setItemCount={setItemCount}/></WordContainer>
             }
             <AddWordBtn>
                 <MdLibraryAdd size="60" color={"#0e004e"} onClick={movePageAddWrod} />

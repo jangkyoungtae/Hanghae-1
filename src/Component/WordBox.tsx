@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { IWords } from "../redux/word/types"
 import { FiPenTool } from "react-icons/fi"
 import {AiOutlineCloseCircle} from "react-icons/ai"
-import { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react"
 import { useDispatch } from "react-redux"
 import { deleteWord } from "../redux/word/actions"
 
@@ -77,7 +77,7 @@ const DeleteBtn = styled.div`
     }
 `
 
-export default function WordBox({ data, ref }: { data: IWords, ref?: React.RefObject<HTMLDivElement> }) {
+export default function WordBox({ data, ref ,setItemCount}: { data: IWords, ref?: React.RefObject<HTMLDivElement> ,setItemCount:React.Dispatch<React.SetStateAction<number>>}) {
     const navigate = useNavigate()
     const [color, setColor] = useState("black");
     const dispatch = useDispatch();
@@ -87,6 +87,9 @@ export default function WordBox({ data, ref }: { data: IWords, ref?: React.RefOb
     );
     
     const itemDelete = () => {
+        setItemCount((v) => {
+            return v -1 
+        })
         delWord(data.id)
     }
 
