@@ -1,5 +1,4 @@
-import { AxiosError } from "axios";
-import { createAction, createAsyncAction } from "typesafe-actions";
+import { createAction } from "typesafe-actions";
 import { IWords } from "./types";
 
 export const ADD = "word/ADD";
