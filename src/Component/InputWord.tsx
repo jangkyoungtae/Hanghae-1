@@ -39,7 +39,7 @@ export default function InputWrod({ caption , setInput, data}: { caption: string
             wordRef.current.value = data;
             setInput(data)
         }
-    }, [data])
+    }, [])
     
     return (
         <InputContainer>
