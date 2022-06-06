@@ -12,7 +12,7 @@ import ShowWordPresenter from "./ShowWordPresenter";
 function ShowWordContainer() {
     const dispatch = useDispatch();
 
-    const [words, setWords] = useState([]);
+    const [words, setWords] = useState<Array<IWords>>([]);
 
     const updateWord = useCallback(
         (word: IWords) => dispatch(addWord({ word: word })),

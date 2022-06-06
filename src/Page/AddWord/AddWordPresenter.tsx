@@ -7,7 +7,14 @@ import { addWord } from "../../redux/word/actions";
 import { IWords } from "../../redux/word/types";
 
 const MainContainer = styled.div`
-    width: 100wh;
+    width:40%;
+    padding: 20px;
+    margin: 50px auto;
+    box-sizing: border-box;
+    box-shadow: 20px 10px 10px black;
+    border-radius: 30px;
+    background-color: #CCFFFF;
+    font-family: "Jalnan";    
 `
 const Title = styled.h2`
     display: flex;
@@ -41,7 +48,7 @@ const BtnContainer = styled.div`
     flex-direction: row;
 `
 
-export default function AddWordPresenter() {
+export default function AddWordPresenter({ data}: {data?:IWords}) {
     const [inputWord, setInputWord] = useState("");
     const [inputDescription, setDescription] = useState("");
     const [inputExample, setInputExample] = useState("");
@@ -62,20 +69,26 @@ export default function AddWordPresenter() {
         updateWord(inputData);
         navigate("/")
     }
+    const movePageCancle = () => {
+        navigate("/")
+    }
     return (
         <MainContainer>
             <Title>단어 추가하기</Title>
             <AddWordContainer>
                 <InputBox>
-                    <InputWrod caption={"단어"} input={inputWord} setInput={setInputWord}/>
-                    <InputWrod caption={"설명"} input={inputDescription} setInput={setDescription} />
-                    <InputWrod caption={"예제"} input={inputExample} setInput={setInputExample} />
+                    <InputWrod caption={"단어"} setInput={setInputWord} data={data?.word}/>
+                    <InputWrod caption={"설명"} setInput={setDescription} data={data?.description}/>
+                    <InputWrod caption={"예제"} setInput={setInputExample} data={data?.example}/>
                 </InputBox>
                 <BtnContainer>
-                    <AddWordBtn style={{
-                        backgroundColor:"red"
-                    }}>취소하기</AddWordBtn>
-                    <AddWordBtn onClick={movePageShowWord}>추가하기</AddWordBtn>
+                    <AddWordBtn
+                        style={{
+                            backgroundColor:"red"
+                        }}
+                        onClick={movePageCancle}
+                    >취소하기</AddWordBtn>
+                    <AddWordBtn onClick={movePageShowWord}>{!data ? "추가하기" : "수정하기"}</AddWordBtn>
                 </BtnContainer>
             </AddWordContainer>
                     
