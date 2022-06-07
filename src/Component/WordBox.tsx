@@ -5,7 +5,7 @@ import { FiPenTool } from "react-icons/fi"
 import {AiOutlineCloseCircle} from "react-icons/ai"
 import React, { useCallback, useState } from "react"
 import { useDispatch } from "react-redux"
-import { deleteWord } from "../redux/word/actions"
+import { DEL } from "../reduxtk/wordSlice"
 
 const BoxContainer = styled.div`
     width: 80%;
@@ -82,7 +82,7 @@ export default function WordBox({ data, ref ,setItemCount}: { data: IWords, ref?
     const [color, setColor] = useState("black");
     const dispatch = useDispatch();
     const delWord = useCallback(
-        (id: number) => dispatch(deleteWord(id)),
+        (id: number) => dispatch(DEL(id)),
         [dispatch]
     );
     

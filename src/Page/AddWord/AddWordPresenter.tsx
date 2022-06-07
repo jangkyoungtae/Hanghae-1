@@ -1,12 +1,10 @@
 import { useCallback,  useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import InputWrod from "../../Component/InputWord";
-import { RootState } from "../../redux";
-import { addWord, updateWord } from "../../redux/word/actions";
 import { IWords } from "../../redux/word/types";
+import { useAppDispatch, useAppSelector } from "../../reduxtk/hooks";
+import  { ADD,  UPDATE } from "../../reduxtk/wordSlice";
 
 const MainContainer = styled.div`
     width:40%;
@@ -59,42 +57,45 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
     const [inputWord, setInputWord] = useState(data ? data.word : "");
     const [inputDescription, setDescription] = useState(data ? data.description : "");
     const [inputExample, setInputExample] = useState(data ? data.example : "");
-    const dispatch = useDispatch();
+
+
+    const dispatch = useAppDispatch();
+    
     const addWords = useCallback(
-        (word: IWords) => dispatch(addWord({ word: word })),
+        (word: IWords) => dispatch(ADD(word)),
         [dispatch]
     );    
     const updateWords = useCallback(
-        (word: IWords) => dispatch(updateWord({ word: word })),
+        (word: IWords) => dispatch(UPDATE(word )),
         [dispatch]
     );    
-    const wordLists = useSelector((state: RootState) => state)
+
+
+    const wordLists = useAppSelector((state) => state.word)
+
     const navigate = useNavigate();
+
     const movePageShowWord = () => {
-        if (inputWord !== "" && inputDescription !== "") {
+        if (inputWord !== "" || inputDescription !== "") {
             
             if (data !== undefined && data !== null) {
-                console.log("testset",data.id)
                 const inputData: IWords = {
-                    id: data.id ,
+                    id: data.id,
                     word: inputWord,
                     description: inputDescription,
                     example: inputExample
-                }
-                updateWords(inputData)
-
+                };
+                updateWords(inputData);
             } else {
-                if (wordLists.word.word.length > 1) {
-                    console.log(wordLists.word.word[wordLists.word.word.length-1].id)
+                if (wordLists.length > 1) {
                     const inputData: IWords = {
-                        id: wordLists.word.word[wordLists.word.word.length-1].id + 1,
+                        id: wordLists[wordLists.length-1].id + 1,
                         word: inputWord,
                         description: inputDescription,
                         example: inputExample
                     }
                     addWords(inputData);
                 }
-                
             }
             navigate("/")
         } else {

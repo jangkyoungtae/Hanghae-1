@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import WordBox from "../../Component/WordBox";
-import { RootState } from "../../redux";
 import { IWords } from "../../redux/word/types";
 import { MdLibraryAdd } from "react-icons/md";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import useIntersectionObserver from "../../Hooks/useIntersectionObserver";
+import { useAppSelector } from "../../reduxtk/hooks";
 
 
 const Title = styled.h1`
@@ -74,11 +73,11 @@ const nonData: IWords = {
 
 
 export default function ShowWordPresenter() {
-    const wordLists = useSelector((state: RootState) => state);
+    const wordLists = useAppSelector((state) => state)
     const [itemCount, setItemCount] = useState(1);
     const navigate = useNavigate();
 
-    const { word } = wordLists.word;
+    const { word } = wordLists;
     
     const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
         if (isIntersecting){
@@ -97,11 +96,6 @@ export default function ShowWordPresenter() {
     const movePageAddWrod = () => {
         navigate("/AddWord")
     }
-
-
-    useEffect(() => {
-   
-    },[])
 
     return ( 
         <MainContainer>
