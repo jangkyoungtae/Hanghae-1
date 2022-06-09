@@ -77,7 +77,6 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
     const movePageShowWord = () => {
         if (inputWord !== "" || inputDescription !== "") {
             if (data !== undefined && data !== null) {
-                console.log(data.id)
                 const inputData: IWords = {
                     id: data.id,
                     word: inputWord,
@@ -87,7 +86,6 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
                 updateWords(inputData);
             } else {
                 if (wordLists.length >= 1) {
-                    console.log(wordLists[wordLists.length-1].id)
                     const inputData: IWords = {
                         id: wordLists[wordLists.length-1].id + 1,
                         word: inputWord,

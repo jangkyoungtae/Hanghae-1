@@ -41,14 +41,8 @@ export const wordSlice = createSlice({
         },
         UPDATE: (state, action: PayloadAction<IWords>) => {
             if (action.payload.id !== undefined && action.payload.id !== null) {
-                
-                state.word.map((v) => {
-                    if (action.payload.id === v.id) {
-                        return state.word[v.id] = { ...action.payload }
-                    } else {
-                        return v
-                    }
-                })
+                const idx = state.word.findIndex(v => v.id === action.payload.id);
+                state.word[idx] = { ...action.payload }
             }
         },
         DEL: (state, action: PayloadAction<number>) => {

@@ -11,5 +11,5 @@ export default axios.create({
 // })
 
 export const getWordsData = () => {
-    return axios.get("http://wordlist.s3-website.ap-northeast-2.amazonaws.com/words")
+    return axios.get("http://wordlist.s3-website.ap-northeast-2.amazonaws.com/api/wordList.json")
 }

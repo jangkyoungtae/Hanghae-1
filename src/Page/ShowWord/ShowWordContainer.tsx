@@ -10,12 +10,9 @@ import ShowWordPresenter from "./ShowWordPresenter";
 function ShowWordContainer() {
 
     const dispatch = useAppDispatch()    
-    const addWords = useCallback(
-        (word: IWords) => dispatch(ADD(word)),
-        [dispatch]
-    );    
+    const addWords = useCallback((word: IWords) => dispatch(ADD(word)), [dispatch]);    
 
-    const { isLoading, error, data } = useQuery("word_list", getWordsData, {
+    const { isLoading, error, data } = useQuery("/wordList.json", getWordsData, {
         onSuccess: (data) => data,
         staleTime: 20000
     });
@@ -29,8 +26,7 @@ function ShowWordContainer() {
     },[word,getWord])*/
 
 
-    useEffect(() => {
-        
+    useEffect(() => {        
         if (word.length < 1) {
             data?.data.map((word: IWords) => {
                 return addWords(word)
