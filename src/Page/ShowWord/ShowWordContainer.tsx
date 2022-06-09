@@ -1,45 +1,51 @@
 import { useCallback, useEffect } from "react";
+import { useQuery } from "react-query";
+import { getWordsData } from "../../api/wordApi";
 import { useAppDispatch, useAppSelector } from "../../reduxtk/hooks";
-import { fetchUserById, Word } from "../../reduxtk/wordSlice";
+import { ADD, IWords, Word } from "../../reduxtk/wordSlice";
 import ShowWordPresenter from "./ShowWordPresenter";
 
 
 
 function ShowWordContainer() {
-   // const dispatch = useDispatch();
 
-    const dispatch = useAppDispatch()
-    
-    // const updateWord = useCallback(
-    //     (word: IWords) => dispatch(addWord({ word: word })),
-    //     [dispatch]
-    // );
-    const getWord = useCallback(()=>dispatch(fetchUserById("/wordList.json")),[dispatch])
+    const dispatch = useAppDispatch()    
+    const addWords = useCallback(
+        (word: IWords) => dispatch(ADD(word)),
+        [dispatch]
+    );    
+
+    const { isLoading, error, data } = useQuery("word_list", getWordsData, {
+        onSuccess: (data) => data,
+        staleTime: 20000
+    });
+    //const getWord = useCallback(()=>dispatch(fetchUserById("/wordList.json")),[dispatch])
     const { word } = useAppSelector((state : Word) => state)
-
-    // const getWordList = async () => {
-    //     const wordlist = await wordApi.get('/wordList.json');
-    //     setWords(wordlist.data);
-    // }    
-
-    // useEffect(() => {
-    //     if (wordLists.length <= 0) {
-    //         getWordList().then(() => {
-    //             words.map((datas:IWords) => {
-    //                 return updateWord(datas);
-    //             })
-    //         })
-    //     }
-
-    // },[updateWord,wordLists,words])
-    useEffect(() => {       
+   
+    /*useEffect(() => {       
         if (word.length <= 0) {
             getWord()
         }
-    },[word,getWord])
-    
+    },[word,getWord])*/
+
+
+    useEffect(() => {
+        
+        if (word.length < 1) {
+            data?.data.map((word: IWords) => {
+                return addWords(word)
+            })
+        }
+    },[data,word,addWords])
+    if (isLoading) {
+        return <div>
+                    로딩중...
+                    </div>
+    }
+    if(error)return <div>An error has occurred:  + error;</div>
     return (
         <ShowWordPresenter />
+        
     )
 }
 

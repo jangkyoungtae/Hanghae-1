@@ -27,7 +27,6 @@ export const fetchUserById = createAsyncThunk(
             .get(path)
             .then((res) => res.data)
             .catch((error) => error)
-        
     }
 )
 
@@ -38,7 +37,6 @@ export const wordSlice = createSlice({
     initialState,
     reducers: {
         ADD: (state, action: PayloadAction<IWords>) => {
-            console.log(action.payload)
             state.word.push(action.payload)
         },
         UPDATE: (state, action: PayloadAction<IWords>) => {
@@ -51,7 +49,6 @@ export const wordSlice = createSlice({
                         return v
                     }
                 })
-                
             }
         },
         DEL: (state, action: PayloadAction<number>) => {
@@ -65,7 +62,7 @@ export const wordSlice = createSlice({
         builder
             .addCase(fetchUserById.fulfilled, (state, action) => {
                 // Add user to the state array
-                state.word.push(...action.payload)
+                state.word = [...action.payload]
             })
   },
 

@@ -104,12 +104,12 @@ export default function ShowWordPresenter() {
                 <DictionaryContainer > 
                     {word.slice(0).reverse().map((text:any, index:any) => {
                         if (index !== itemCount) {
-                            return word.length > itemCount && index <= itemCount &&
+                            return word.length >= itemCount && index <= itemCount &&
                                 <WordContainer key={`${text.word + index}`} >
                                     <WordBox data={text} setItemCount={setItemCount} />
                                 </WordContainer>
                         } else {                            
-                            return word.length > itemCount && index <= itemCount &&
+                            return word.length >= itemCount && index <= itemCount &&
                                 <WordContainer key={`${text.word + index}`} ref={setTarget} >
                                     <WordBox data={text} setItemCount={setItemCount} />
                                 </WordContainer>

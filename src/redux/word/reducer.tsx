@@ -40,6 +40,6 @@ const word = createReducer<Word, WordAction>(initailState, {
         });
     },
 });
-//
+
 
 export default word

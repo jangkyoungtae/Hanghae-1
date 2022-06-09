@@ -57,8 +57,7 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
     const [inputWord, setInputWord] = useState(data ? data.word : "");
     const [inputDescription, setDescription] = useState(data ? data.description : "");
     const [inputExample, setInputExample] = useState(data ? data.example : "");
-
-
+    
     const dispatch = useAppDispatch();
     
     const addWords = useCallback(
@@ -66,7 +65,7 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
         [dispatch]
     );    
     const updateWords = useCallback(
-        (word: IWords) => dispatch(UPDATE(word )),
+        (word: IWords) => dispatch(UPDATE(word)),
         [dispatch]
     );    
 
@@ -77,8 +76,8 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
 
     const movePageShowWord = () => {
         if (inputWord !== "" || inputDescription !== "") {
-            
             if (data !== undefined && data !== null) {
+                console.log(data.id)
                 const inputData: IWords = {
                     id: data.id,
                     word: inputWord,
@@ -87,7 +86,8 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
                 };
                 updateWords(inputData);
             } else {
-                if (wordLists.length > 1) {
+                if (wordLists.length >= 1) {
+                    console.log(wordLists[wordLists.length-1].id)
                     const inputData: IWords = {
                         id: wordLists[wordLists.length-1].id + 1,
                         word: inputWord,
@@ -102,9 +102,11 @@ export default function AddWordPresenter({ data}: {data?:IWords}) {
             alert("단어와 설명이 비어있습니다 . 확인해주세요");
         }
     }
+
     const movePageCancle = () => {
         navigate("/")
     }
+
     return (
         <MainContainer>
             <Title>단어 추가하기</Title>
